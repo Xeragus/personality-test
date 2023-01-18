@@ -4,24 +4,24 @@
   <div class="mb-3">
     <%= form.label "Answer #{form.index.to_i + 1}", style: "display: block", class: 'lead' %>
     <div class="row">
-      <div class="col-sm-11">
+      <div class="col-sm-10">
         <%= form.text_field :content, class: 'form-control mb-1' %>
         <div>
           <%= form.label "Rank answer", style: "display: block", class: 'lead mb-1' %>
           <div class="row">
-            <div class="col-sm-1">
-              Completely Extrovert
+            <div class="col-sm-2">
+              100% Extrovert
             </div>
-            <div class="col-sm-10">
+            <div class="col-sm-8">
               <%= form.range_field :introvert_score, in: 0..100, step: 1, class: 'form-range' %>
             </div>
-            <div class="col-sm-1">
-              Completely Introvert
+            <div class="col-sm-2">
+              100% Introvert
             </div>
           </div>
         </div>
       </div>
-      <div class="col-sm-1">
+      <div class="col-sm-2">
         <%= form.submit "Destroy", class: 'btn btn-danger',
                         formaction: answer_path(form.index, form.object.id),
                         formmethod: :delete,
@@ -30,5 +30,4 @@
       </div>
     </div>
   </div>
-
 <% end %>

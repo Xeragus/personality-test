@@ -19,7 +19,7 @@
           <p class="lead">Answers:</p>
           <ol>
             <% question.answers.each do |answer| %>
-              <li class="lead"><b><%= answer.content %> (<%= answer.introvert_score %>% introvert)</b></li>
+              <li class="lead"><b><%= answer.decorate.with_personality_score %></b></li>
             <% end %>
           </ol>
         </div>
