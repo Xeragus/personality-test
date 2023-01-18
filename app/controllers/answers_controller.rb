@@ -2,8 +2,7 @@ class AnswersController < ApplicationController
   before_action :setup_question
   before_action :find_answer, only: :destroy
 
-  def new
-  end
+  def new; end
 
   def destroy
     @answer&.destroy
