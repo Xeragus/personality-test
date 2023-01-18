@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
+  resources :questions
+  resources :answers, only: [], param: :index do
+    member do
+      delete '(:id)' => "answers#destroy", as: ""
+      post '/' => "answers#create"
+    end
+  end
   # root "articles#index"
 end

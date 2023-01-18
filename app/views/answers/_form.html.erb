@@ -1,0 +1,18 @@
+<%= turbo_frame_tag "answer_#{form.index}" do %>
+  <%= form.hidden_field :id %>
+
+  <div>
+    <%= form.label :content, style: "display: block" %>
+    <%= form.text_field :content %>
+  </div>
+  <div>
+    <%= form.label :introvert_score, style: "display: block" %>
+    <%= form.text_field :introvert_score %>
+  </div>
+
+  <%= form.submit "destroy answer",
+                  formaction: answer_path(form.index, form.object.id),
+                  formmethod: :delete,
+                  formnovalidate: true,
+                  data: { turbo_frame: "answer_#{form.index}" } %>
+<% end %>

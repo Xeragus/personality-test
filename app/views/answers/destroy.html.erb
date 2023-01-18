@@ -1,0 +1,8 @@
+<%= fields model: @question do |form| %>
+  <%= form.fields_for :answers, child_index: params[:index] do |answer_form| %>
+    <%= turbo_frame_tag "answer_#{answer_form.index}" do %>
+      <%= answer_form.hidden_field :id, value: params[:id] %>
+      <%= answer_form.hidden_field :_destroy, value: true %>
+    <% end %>
+  <% end %>
+<% end %>
