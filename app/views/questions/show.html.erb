@@ -24,7 +24,7 @@
       <% @question.answers.each_with_index do |answer, index| %>
         <li class="list-group-item py-3 text-center">
           <h5>Answer <%= index + 1 %></h5>
-          <p class="lead"><%= answer.decorate.with_personality_score %></p>
+          <p class="lead"><%= answer.decorate.print_with_personality %></p>
           <p class="mb-0">Selected 10 times (15%)</p>
         </li>
       <% end %>
