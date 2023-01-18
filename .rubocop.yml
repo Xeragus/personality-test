@@ -1,0 +1,9 @@
+AllCops:
+  Exclude:
+    - 'bin/bundle'
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
