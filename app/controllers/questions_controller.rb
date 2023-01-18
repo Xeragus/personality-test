@@ -19,6 +19,7 @@ class QuestionsController < ApplicationController
 
   # POST /questions or /questions.json
   def create
+    debugger
     @question = Question.new(question_params)
 
     respond_to do |format|

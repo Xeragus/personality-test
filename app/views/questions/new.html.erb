@@ -1,9 +1,8 @@
-<h1>New question</h1>
-
-<%= render "form", question: @question %>
-
-<br>
-
-<div>
-  <%= link_to "Back to questions", questions_path %>
+<div class="mb-5">
+  <h1>Create new question</h1>
+  <small>*Questions must have at least 2, but not more than 8 answers</small>
+  <br>
+  <small>*Besides the content of an answer, one needs to rank how "introvert" or "extrovert" the answer is on the 0-100 range.</small>
 </div>
+<%= render "form", question: @question %>
+<br>

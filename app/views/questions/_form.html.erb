@@ -11,24 +11,21 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :content, style: "display: block" %>
-    <%= form.text_field :content %>
+  <div class="mb-5">
+    <%= form.label :question, style: "display: block", class: 'lead' %>
+    <%= form.text_field :content, class: 'form-control' %>
   </div>
-
-  <h4>Answers</h4>
   <div id="answers">
     <%= form.fields_for :answers do |answer_form| %>
       <%= render "answers/form", form: answer_form %>
     <% end %>
   </div>
-  <%= form.submit "Add answer",
-                  formaction: answer_path(@question.answers.size),
-                  formmethod: :post,
-                  formnovalidate: true,
-                  id: "add-answer" %>
-
-  <div>
-    <%= form.submit %>
+  <div class="text-end mt-5">
+    <%= form.submit 'Add answer', class: 'btn btn-success',
+                    formaction: answer_path(@question.answers.size),
+                    formmethod: :post,
+                    formnovalidate: true,
+                    id: "add-answer" %>
+    <%= form.submit 'Save question & answers', class: 'btn btn-success' %>
   </div>
 <% end %>

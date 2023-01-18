@@ -1,10 +1,24 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @question %>
+<div class="row">
+  <div class="col-sm-10">
+    <div class="mb-5">
+      <h3>Question</h3>
+      <p class="lead"><%= @question.content %></p>
+    </div>
+  </div>
+  <div class="col-sm-2">
+    <%= link_to "Back to questions", questions_path, class: 'btn btn-primary mb-1 w-100' %>
+    <%= link_to "Edit this question", edit_question_path(@question), class: 'btn btn-warning mb-1 w-100' %>
+    <%= button_to "Destroy this question", @question, method: :delete, class: 'btn btn-danger w-100' %>
+  </div>
+</div>
 
+<% @question.answers.each_with_index do |answer, index| %>
+  <div class="mb-5">
+    <h3>Answer <%= index + 1 %></h3>
+    <p class="lead"><%= answer.content %> (<%= answer.introvert_score %>% introvert)</p>
+  </div>
+<% end %>
 <div>
-  <%= link_to "Edit this question", edit_question_path(@question) %> |
-  <%= link_to "Back to questions", questions_path %>
-
-  <%= button_to "Destroy this question", @question, method: :delete %>
 </div>

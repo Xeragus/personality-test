@@ -1,18 +1,34 @@
 <%= turbo_frame_tag "answer_#{form.index}" do %>
   <%= form.hidden_field :id %>
 
-  <div>
-    <%= form.label :content, style: "display: block" %>
-    <%= form.text_field :content %>
-  </div>
-  <div>
-    <%= form.label :introvert_score, style: "display: block" %>
-    <%= form.text_field :introvert_score %>
+  <div class="mb-3">
+    <%= form.label "Answer #{form.index.to_i + 1}", style: "display: block", class: 'lead' %>
+    <div class="row">
+      <div class="col-sm-11">
+        <%= form.text_field :content, class: 'form-control mb-1' %>
+        <div>
+          <%= form.label "Rank answer", style: "display: block", class: 'lead mb-1' %>
+          <div class="row">
+            <div class="col-sm-1">
+              Completely Extrovert
+            </div>
+            <div class="col-sm-10">
+              <%= form.range_field :introvert_score, in: 0..100, step: 1, class: 'form-range' %>
+            </div>
+            <div class="col-sm-1">
+              Completely Introvert
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-1">
+        <%= form.submit "Destroy", class: 'btn btn-danger',
+                        formaction: answer_path(form.index, form.object.id),
+                        formmethod: :delete,
+                        formnovalidate: true,
+                        data: { turbo_frame: "answer_#{form.index}" } %>
+      </div>
+    </div>
   </div>
 
-  <%= form.submit "destroy answer",
-                  formaction: answer_path(form.index, form.object.id),
-                  formmethod: :delete,
-                  formnovalidate: true,
-                  data: { turbo_frame: "answer_#{form.index}" } %>
 <% end %>
