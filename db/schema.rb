@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_19_123225) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_19_125850) do
   create_table "answers", force: :cascade do |t|
     t.string "content"
     t.integer "introvert_score"
@@ -18,6 +18,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_19_123225) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["question_id"], name: "index_answers_on_question_id"
+  end
+
+  create_table "personality_test_responses", force: :cascade do |t|
+    t.integer "score"
+    t.integer "personality_type_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["personality_type_id"], name: "index_personality_test_responses_on_personality_type_id"
   end
 
   create_table "personality_types", force: :cascade do |t|
@@ -34,4 +42,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_19_123225) do
   end
 
   add_foreign_key "answers", "questions"
+  add_foreign_key "personality_test_responses", "personality_types"
 end

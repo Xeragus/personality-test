@@ -1,0 +1,2 @@
+class PersonalityTestResponse < ApplicationRecord
+end
