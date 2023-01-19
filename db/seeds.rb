@@ -18,6 +18,10 @@ PersonalityType.create!(
       name: 'Extrovert',
       description: 'Extroverts are those who enjoy being around other people. They have a strong need to socialize '\
                    'and talk to others. Extroverted people are often seen as more sociable, confident, and outgoing.'
+    },
+    {
+      name: 'Balanced',
+      description: 'Balanced personalities cannot be classified as either introvert or extrovert.'
     }
   ]
 )

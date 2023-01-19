@@ -4,15 +4,14 @@ class PersonalityTestResponsesController < ApplicationController
   end
 
   def create
-    sleep(5)
-
-    personality_test_response = PersonalityTestResponse.create!
-    params['answers'].each do |answer_id|
-      ResponseAnswer.create!(personality_test_response: personality_test_response, answer: Answer.find(answer_id))
-    end
+    personality_test_response = PersonalityTestGeneratorService.generate!(params)
+    PersonalityScoreService.calculate!(personality_test_response)
 
     render json: {
-      message: 'This is a message from controlelr'
+      score_data: {
+        personality: personality_test_response.personality_type.name,
+        score: personality_test_response.score
+      }
     }
   end
 end

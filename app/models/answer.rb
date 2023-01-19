@@ -2,7 +2,7 @@ class Answer < ApplicationRecord
   include Presentable
 
   belongs_to :question
-  has_many :personality_test_responses_answers
+  has_many :personality_test_responses_answers, class_name: 'ResponseAnswer'
   has_many :personality_test_responses, through: :personality_test_responses_answers
 
   validates :content, presence: true

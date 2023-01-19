@@ -39,6 +39,7 @@
     <h5>Give us a second to prepare the results</h5>
     <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
   </div>
+  <p class="fs-1" id="score_result"></p>
 </div>
 <script type="text/javascript" charset="utf-8">
     var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -125,7 +126,12 @@
             body: JSON.stringify({ answers: Object.values(pickedAnswers) })
         }).then(response => response.json())
           .then(data => {
-              console.log("Request complete! response:", data);
+              // 2 seconds delay just to add to the excitement about the results, also to show off the custom spinner
+              setTimeout(
+                function() {
+                    document.getElementById('response_content').style = "display: none;";
+                    document.getElementById('score_result').textContent = `You are ${data.score_data.score}% ${data.score_data.personality}`;
+                }, 2000);
           });
     }
 
