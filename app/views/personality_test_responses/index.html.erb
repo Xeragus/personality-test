@@ -41,8 +41,6 @@
   </div>
 </div>
 <script type="text/javascript" charset="utf-8">
-    console.log('LOADED');
-
     var currentTab = 0; // Current tab is set to be the first tab (0)
     showTab(currentTab); // Display the current tab
     let pickedAnswers = {};
@@ -118,6 +116,17 @@
         document.getElementById("test_wrapper").classList.remove('d-block');
         document.getElementById("test_wrapper").classList.add('d-none');
         document.getElementById("response_wrapper").classList.remove('d-none');
+        fetch("/personality_test_responses", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ answers: Object.values(pickedAnswers) })
+        }).then(response => response.json())
+          .then(data => {
+              console.log("Request complete! response:", data);
+          });
     }
 
 </script>

@@ -1,5 +1,7 @@
 class Question < ApplicationRecord
   has_many :answers, dependent: :destroy
+  has_many :responded_questions
+  has_many :personality_test_responses, through: :responded_questions
 
   validates :content, presence: true
   validates_associated :answers

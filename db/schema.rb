@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_19_125850) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_19_183533) do
   create_table "answers", force: :cascade do |t|
     t.string "content"
     t.integer "introvert_score"
@@ -22,7 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_19_125850) do
 
   create_table "personality_test_responses", force: :cascade do |t|
     t.integer "score"
-    t.integer "personality_type_id", null: false
+    t.integer "personality_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["personality_type_id"], name: "index_personality_test_responses_on_personality_type_id"
@@ -41,6 +41,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_19_125850) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "responses_answers", force: :cascade do |t|
+    t.integer "personality_test_response_id", null: false
+    t.integer "answer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["answer_id"], name: "index_responses_answers_on_answer_id"
+    t.index ["personality_test_response_id"], name: "index_responses_answers_on_personality_test_response_id"
+  end
+
   add_foreign_key "answers", "questions"
   add_foreign_key "personality_test_responses", "personality_types"
+  add_foreign_key "responses_answers", "answers"
+  add_foreign_key "responses_answers", "personality_test_responses"
 end
