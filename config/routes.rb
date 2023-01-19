@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root 'personality_test_responses#index'
+
   resources :questions
   resources :answers, only: [], param: :index do
     member do
@@ -6,5 +8,5 @@ Rails.application.routes.draw do
       post '/' => 'answers#create'
     end
   end
-  # root "articles#index"
+  resources :personality_test_responses, only: [:create]
 end

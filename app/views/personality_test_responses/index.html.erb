@@ -1,0 +1,123 @@
+<%= stylesheet_link_tag "personality_test_response" %>
+
+<div class="d-block" id="test_wrapper">
+  <% @questions.each_with_index do |question, question_index| %>
+    <div class="tab">
+      <p>Question <%= "#{question_index + 1}/#{@questions.count}" %>:</p>
+      <p class="lead"><%= question.content %></p>
+      <ul class="list-group mt-3">
+        <% question.answers.each_with_index do |answer, answer_index| %>
+          <li class="list-group-item py-3 mt-3 border-top rounded test-answer answer-question-<%= question_index %>"
+              onclick="pickAnswer(this, <%= answer.id %>, <%= question_index %>)">
+            <p class="lead mb-0">
+              <span class="badge bg-secondary"><%= answer_index + 1 %></span>
+              &nbsp;&nbsp;
+              <%= answer.content %>
+            </p>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div style="overflow:auto;" class="mt-5">
+    <div style="float:right;">
+      <button type="button" id="prevBtn" class="btn btn-primary" onclick="nextPrev(-1)">Previous</button>
+      <button type="button" id="nextBtn" class="btn btn-primary disabled" onclick="nextPrev(1)">Next</button>
+    </div>
+  </div>
+
+  <!-- Circles which indicates the steps of the form: -->
+  <div style="text-align:center;margin-top:40px;">
+    <% @questions.each do %>
+      <span class="step"></span>
+    <% end %>
+  </div>
+</div>
+<div class="d-none text-center mt-5" id="response_wrapper">
+  <div id="response_content">
+    <h5>Give us a second to prepare the results</h5>
+    <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+  </div>
+</div>
+<script type="text/javascript" charset="utf-8">
+    console.log('LOADED');
+
+    var currentTab = 0; // Current tab is set to be the first tab (0)
+    showTab(currentTab); // Display the current tab
+    let pickedAnswers = {};
+
+    function showTab(n) {
+        // This function will display the specified tab of the form ...
+        var x = document.getElementsByClassName("tab");
+        x[n].style.display = "block";
+        // ... and fix the Previous/Next buttons:
+        if (n == 0) {
+            document.getElementById("prevBtn").style.display = "none";
+        } else {
+            document.getElementById("prevBtn").style.display = "inline";
+        }
+        if (n == (x.length - 1)) {
+            document.getElementById("nextBtn").innerHTML = "Submit";
+        } else {
+            document.getElementById("nextBtn").innerHTML = "Next";
+        }
+        // ... and run a function that displays the correct step indicator:
+        fixStepIndicator(n)
+    }
+
+    function nextPrev(n) {
+        if (n > 0) {
+            document.getElementById("nextBtn").classList.add('disabled');
+        } else {
+            document.getElementById("nextBtn").classList.remove('disabled');
+        }
+
+        // This function will figure out which tab to display
+        var x = document.getElementsByClassName("tab");
+        // Exit the function if any field in the current tab is invalid:
+        if (n == 1 && !validateForm()) return false;
+        // Hide the current tab:
+        x[currentTab].style.display = "none";
+        // Increase or decrease the current tab by 1:
+        currentTab = currentTab + n;
+        // if you have reached the end of the form... :
+        if (currentTab >= x.length) {
+            //...the form gets submitted:
+            submit();
+            return false;
+        }
+        // Otherwise, display the correct tab:
+        showTab(currentTab);
+    }
+
+    function validateForm() {
+        return true;
+    }
+
+    function fixStepIndicator(n) {
+        // This function removes the "active" class of all steps...
+        var i, x = document.getElementsByClassName("step");
+        for (i = 0; i < x.length; i++) {
+            x[i].className = x[i].className.replace(" active", "");
+        }
+        //... and adds the "active" class to the current step:
+        x[n].className += " active";
+    }
+
+    function pickAnswer(element, answerId, questionId) {
+        document.querySelectorAll('.answer-question-' + questionId).forEach(answerElement => {
+            answerElement.style = "background: #fff!important;";
+        })
+        element.style = "background: #cecece;"
+        document.getElementById("nextBtn").classList.remove('disabled');
+        pickedAnswers[questionId] = answerId;
+    }
+
+    function submit() {
+        document.getElementById("test_wrapper").classList.remove('d-block');
+        document.getElementById("test_wrapper").classList.add('d-none');
+        document.getElementById("response_wrapper").classList.remove('d-none');
+    }
+
+</script>
