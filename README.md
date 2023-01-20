@@ -25,6 +25,8 @@ Clone the repo on your machine.
 In the app, run `bundle install`.
 ### 4. Run seeds
 The seeder adds base questions & answers data so that you don't have to create them manually if you don't want to.
+### 5. Run specs
+To run the spec suite, run `rspec`
 
 To seed the database, run `rake db:seed`.
 
