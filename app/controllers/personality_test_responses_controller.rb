@@ -5,7 +5,7 @@ class PersonalityTestResponsesController < ApplicationController
 
   def create
     personality_test_response = PersonalityTestGeneratorService.generate!(params)
-    PersonalityScoreService.calculate!(personality_test_response)
+    PersonalityScoreService.new(personality_test_response).calculate!
 
     render json: {
       score_data: {

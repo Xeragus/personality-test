@@ -65,10 +65,10 @@ questions_data = [
 ]
 
 questions_data.each do |question_data|
-  question = Question.find_or_create_by!(content: question_data[:content])
+  question = Question.find_or_initialize_by(content: question_data[:content])
   next if question.answers.any?
 
-  Question.find_or_initialize_by(content: question_data[:content]).update!(answers_attributes: question_data[:answers])
+  question.update!(answers_attributes: question_data[:answers])
 end
 
 personality_types = [
@@ -80,7 +80,7 @@ personality_types = [
                    'rather than large groups or crowds.'
   },
   {
-    name: PersonalityType::NAMES::INTROVERT,
+    name: PersonalityType::NAMES::EXTROVERT,
     description: 'Extroverts are those who enjoy being around other people. They have a strong need to socialize '\
                    'and talk to others. Extroverted people are often seen as more sociable, confident, and outgoing.'
   },

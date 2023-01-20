@@ -44,7 +44,7 @@
 <script type="text/javascript" charset="utf-8">
     var currentTab = 0; // Current tab is set to be the first tab (0)
     showTab(currentTab); // Display the current tab
-    let pickedAnswers = {};
+    var pickedAnswers = {};
 
     function showTab(n) {
         // This function will display the specified tab of the form ...
@@ -131,7 +131,7 @@
                 function() {
                     document.getElementById('response_content').style = "display: none;";
                     document.getElementById('score_result').textContent = `You are ${data.score_data.score}% ${data.score_data.personality}`;
-                }, 2000);
+                }, 1000);
           });
     }
 

@@ -4,7 +4,6 @@ class PersonalityScoreService
   end
 
   def calculate!
-    # introvert_score = average_introvert_score(personality_test_response.answers)
     personality_type, score = if average_answer.extrovert?
                                 [PersonalityTypeRepository.extrovert, average_answer.personality_score]
                               elsif average_answer.introvert?
