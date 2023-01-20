@@ -7,22 +7,20 @@ class Answer < ApplicationRecord
 
   validates :content, presence: true
 
+  def personality_score
+    PersonalityScoreService.calibrate_score(introvert_score)
+  end
+
   # NOTE: In the future the "introvert score" could be a more complex calculation, hence extraction in methods
   def introvert?
-    introvert_score > 50
+    PersonalityScoreService.introvert?(introvert_score)
   end
 
   def extrovert?
-    introvert_score < 50
+    PersonalityScoreService.extrovert?(introvert_score)
   end
 
   def balanced?
-    introvert_score == 50
-  end
-
-  def personality_score
-    return 100 - introvert_score if extrovert?
-
-    introvert_score
+    PersonalityScoreService.balanced?(introvert_score)
   end
 end
