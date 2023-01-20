@@ -1,5 +1,5 @@
 # README
-
+### Video of the app: https://www.loom.com/share/1c1239e91ba848f393b7c761eb105250
 This app is a playground app for demonstrating `Rails` practices, techniques and patterns. Besides `Rails`,
 special attention is paid to front-end `JS`, while also implementing a `Hotwired Turbo` form.
 
