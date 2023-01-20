@@ -1,41 +1,34 @@
 class PersonalityScoreService
-  class << self
-    def calculate!(personality_test_response)
-      introvert_score = average_introvert_score(personality_test_response.answers)
-      personality_type, score = if Answer.extrovert?(introvert_score)
-                                  [PersonalityType.find_by(name: 'Extrovert'), calibrate_score(introvert_score)]
-                                elsif Answer.introvert?(introvert_score)
-                                  [PersonalityType.find_by(name: 'Introvert'), calibrate_score(introvert_score)]
-                                else
-                                  [PersonalityType.find_by(name: 'Balanced'), calibrate_score(introvert_score)]
-                                end
+  def initialize(personality_test_response)
+    @personality_test_response = personality_test_response
+  end
 
-      personality_test_response.update!(personality_type_id: personality_type.id, score:)
-    end
+  def calculate!
+    # introvert_score = average_introvert_score(personality_test_response.answers)
+    personality_type, score = if average_answer.extrovert?
+                                [PersonalityTypeRepository.extrovert, average_answer.personality_score]
+                              elsif average_answer.introvert?
+                                [PersonalityTypeRepository.introvert, average_answer.personality_score]
+                              else
+                                [PersonalityTypeRepository.balanced, average_answer.personality_score]
+                              end
 
-    def introvert?(score)
-      score > 50
-    end
+    @personality_test_response.update!(personality_type_id: personality_type.id, score:)
+  end
 
-    def extrovert?(score)
-      score < 50
-    end
+  private
 
-    def balanced?(score)
-      score == 50
-    end
+  def average_answer
+    @average_answer ||= Answer.new(introvert_score: average_score)
+  end
 
-    def calibrate_score(score)
-      # 40% introvert means 60% extrovert
-      return 100 - score if score < 50
+  def average_score
+    answers.inject(0) do |sum, e|
+      sum + e.introvert_score
+    end / answers.count
+  end
 
-      score
-    end
-
-    private
-
-    def average_introvert_score(answers)
-      answers.inject(0) { |sum, e| sum + e.introvert_score } / answers.count
-    end
+  def answers
+    @answers ||= @personality_test_response.answers
   end
 end

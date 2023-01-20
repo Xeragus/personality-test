@@ -8,19 +8,22 @@ class Answer < ApplicationRecord
   validates :content, presence: true
 
   def personality_score
-    PersonalityScoreService.calibrate_score(introvert_score)
+    # 40% introvert means 60% extrovert
+    return 100 - introvert_score if introvert_score < 50
+
+    introvert_score
   end
 
   # NOTE: In the future the "introvert score" could be a more complex calculation, hence extraction in methods
   def introvert?
-    PersonalityScoreService.introvert?(introvert_score)
+    introvert_score > 50
   end
 
   def extrovert?
-    PersonalityScoreService.extrovert?(introvert_score)
+    introvert_score < 50
   end
 
   def balanced?
-    PersonalityScoreService.balanced?(introvert_score)
+    introvert_score == 50
   end
 end

@@ -65,26 +65,32 @@ questions_data = [
 ]
 
 questions_data.each do |question_data|
+  question = Question.find_or_create_by!(content: question_data[:content])
+  next if question.answers.any?
+
   Question.find_or_initialize_by(content: question_data[:content]).update!(answers_attributes: question_data[:answers])
 end
 
-PersonalityType.create!(
-  [
-    {
-      name: PersonalityType::NAMES::INTROVERT,
-      description: 'An introvert is a person with qualities of a personality type known as introversion, which means '\
+personality_types = [
+  {
+    name: PersonalityType::NAMES::INTROVERT,
+    description: 'An introvert is a person with qualities of a personality type known as introversion, which means '\
                    'that they feel more comfortable focusing on their inner thoughts and ideas, rather than what’s '\
                    'happening externally. They enjoy spending time with just one or two people, '\
                    'rather than large groups or crowds.'
-    },
-    {
-      name: PersonalityType::NAMES::INTROVERT,
-      description: 'Extroverts are those who enjoy being around other people. They have a strong need to socialize '\
+  },
+  {
+    name: PersonalityType::NAMES::INTROVERT,
+    description: 'Extroverts are those who enjoy being around other people. They have a strong need to socialize '\
                    'and talk to others. Extroverted people are often seen as more sociable, confident, and outgoing.'
-    },
-    {
-      name: PersonalityType::NAMES::BALANCED,
-      description: 'Balanced personalities cannot be classified as either introvert or extrovert.'
-    }
-  ]
-)
+  },
+  {
+    name: PersonalityType::NAMES::BALANCED,
+    description: 'Balanced personalities cannot be classified as either introvert or extrovert.'
+  }
+]
+
+personality_types.each do |personality_type|
+  PersonalityType.find_or_create_by!(name: personality_type[:name], description: personality_type[:description])
+end
+
